@@ -1,0 +1,5 @@
+cmake_minimum_required(VERSION 3.21)
+project("quest")
+
+add_executable(quest main_my_quest.cpp my_quest.cpp)
+set_property(TARGET bank PROPERTY CXX_STANDARD 20)
