@@ -9,18 +9,21 @@ void Board::board_hi_words(){
             cout << "Good luck" << endl;
         }
         
-void Board::go_next_room(int number_room){
-    if(number_room == -1){
+bool Board::go_next_room(int number_room){
+            if(number_room == -1){
                 if(current_location->previous == nullptr) {
                     cout << "There is no way backwards" << endl;
+                    
                 }
                 else{
                     current_location = current_location->previous;
                 }
+                return false;
             }
             else if(number_room <= 0 || number_room > current_location->rooms.size()) {
                 cout << "No such a room" << endl;
                 cout << "Try again" << endl;
+                return false;
             }
             else{
                 if (current_location->rooms[number_room] == nullptr) {
@@ -30,6 +33,7 @@ void Board::go_next_room(int number_room){
                 current_location = current_location->rooms[number_room];
                 
             }
+            return true;
         }
 void Board::next_step(){
             cout << "Choose the way" << endl;
@@ -48,7 +52,11 @@ void Board::instruction(){
             cout << "You can enter room number:" << endl;
             cout << "From one to N" << endl;
             cout << "To go to the previous room enter -1" << endl;
-            cout << "Enter 73 to check room loot" << endl;  
+            cout << "Enter 73 to check room loot" << endl; 
+            cout << "To eat food: " << endl;
+            cout << "Bread: enter 1" << endl;
+            cout << "Banana: enter 2" << endl;
+            cout << "Nothing: enter -1" << endl; 
         }
 void Board::what_about_food(){
             cout << "There are:" << endl;
@@ -60,4 +68,15 @@ void Board::lines(){
     cout << endl;
     cout << endl;
 }
+void Board::delete_all_rooms(Room* room){
+            for(int i = 0; i < room->rooms.size(); i++){
+                if(room->rooms[i] != nullptr){
+                    delete_all_rooms(room->rooms[i]);
+                }
+            }
+            Room *r = room->previous;
+            delete room;
+            delete_all_rooms(r);
+            
+        }
         
